@@ -1,65 +1,79 @@
-import React from 'react'
-import "./index.css"
+import React, { useRef, useEffect } from 'react';
+import { FiArrowRight, FiMail, FiMapPin } from "react-icons/fi";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import gsap from "gsap"
-import ScrollTrigger from "gsap/ScrollTrigger"
+gsap.registerPlugin(ScrollTrigger);
 
-import {useEffect, useRef, useState} from "react"
+const Contact = () => {
+    return (
+        <section id="contact_section" className="py-24 lg:py-32 bg-zinc-950 text-white border-t border-zinc-900">
+            <div className="container-fluid">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+                    
+                    {/* Info */}
+                    <div className="flex flex-col justify-center">
+                        <p className="text-red-600 font-bold uppercase tracking-widest mb-4">Get in Touch</p>
+                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-8 tracking-tighter uppercase leading-none">
+                            Let's Build <br/> Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800">Brutal</span>.
+                        </h2>
+                        <p className="text-xl text-zinc-400 max-w-md font-light mb-12 border-l-2 border-zinc-800 pl-6">
+                            Open for freelance opportunities, collaborations, or just a chat about technology and design.
+                        </p>
+                        
+                        <div className="space-y-8">
+                            <a href="mailto:nary406@gmail.com" className="group flex items-center gap-6 cursor-pointer">
+                                <div className="w-16 h-16 border border-zinc-800 flex items-center justify-center group-hover:bg-red-600 group-hover:border-red-600 group-hover:text-white transition-all duration-300">
+                                    <FiMail className="text-2xl"/>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-1 group-hover:text-red-500 transition-colors">Email Me</p>
+                                    <h4 className="text-2xl font-bold tracking-tight">nary406@gmail.com</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-gsap.registerPlugin(ScrollTrigger)
+                    {/* Form */}
+                    <form className="bg-black/40 p-10 border border-zinc-800/50 backdrop-blur-sm hover:border-red-900/30 transition-colors duration-500">
+                        <div className="space-y-8">
+                            <div className="group">
+                                <label htmlFor="name" className="block text-xs font-bold uppercase tracking-widest mb-3 text-zinc-500 group-focus-within:text-red-600 transition-colors">Name</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    className="w-full bg-transparent border-b-2 border-zinc-800 py-4 text-xl text-white focus:outline-none focus:border-red-600 transition-colors placeholder-zinc-700 font-bold"
+                                    placeholder="YOUR NAME"
+                                />
+                            </div>
+                            <div className="group">
+                                <label htmlFor="email" className="block text-xs font-bold uppercase tracking-widest mb-3 text-zinc-500 group-focus-within:text-red-600 transition-colors">Email</label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    className="w-full bg-transparent border-b-2 border-zinc-800 py-4 text-xl text-white focus:outline-none focus:border-red-600 transition-colors placeholder-zinc-700 font-bold"
+                                    placeholder="YOUR EMAIL"
+                                />
+                            </div>
+                            <div className="group">
+                                <label htmlFor="message" className="block text-xs font-bold uppercase tracking-widest mb-3 text-zinc-500 group-focus-within:text-red-600 transition-colors">Message</label>
+                                <textarea 
+                                    id="message" 
+                                    rows={4}
+                                    className="w-full bg-transparent border-b-2 border-zinc-800 py-4 text-xl text-white focus:outline-none focus:border-red-600 transition-colors resize-none placeholder-zinc-700 font-bold"
+                                    placeholder="TELL ME ABOUT YOUR PROJECT"
+                                ></textarea>
+                            </div>
+                            <button className="w-full bg-white text-black font-black py-5 uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center justify-center gap-3 mt-4">
+                                Send Message <FiArrowRight className="text-xl"/>
+                            </button>
+                        </div>
+                    </form>
 
+                </div>
+            </div>
+        </section>
+    );
+};
 
-function Contact() {
-
-    const left=useRef(null)
-    const right=useRef(null)
-
-    useEffect(()=>{
-        gsap.fromTo(left.current, {x:"-900px", opacity:0 }, {x:"0px", opacity:1,duration:1, ease:"slow(0.7,0.7,false)",
-        scrollTrigger:{
-          start:"top 80%",
-          end:"top 20%",
-          scrub:3,
-          trigger:left.current,
-          
-          
-         
-        }
-     });
-     
-     gsap.fromTo(right.current, {opacity:0, x:"900px", }, {x:"0px", opacity:1, duration:1, ease:"slow(0.7,0.7,false)",
-     
-      scrollTrigger:{
-       start:"top 80%",
-       end:"top 50%",
-     scrub:3,
-       trigger:right.current,
-      
-     }})
-        
-        }, [])
-        
-
-
-
-  return (
-    <div className="con_main" id="contact_section">
-        <h3>We can do better world , learning and sharing knowledge</h3>
-    <div className="con_section">
-    <img src="https://res.cloudinary.com/dky72aehn/image/upload/v1714453090/Email_campaign-amico_eb8kzv.svg" ref={left}/>
-     <form className="form_div"  ref={right}>
-        <h2>Get in Touch</h2>
-        <input id="name" type="search" placeholder="Name"/>
-
-        <input id="mail" type="search"   placeholder="Email"/>
-       
-         <textarea id="message"  placeholder="Type your message"></textarea>
-        
-        <button>Submit</button>
-     </form>
-    </div>
-    </div>
-  )
-}
-
-export default Contact
+export default Contact;

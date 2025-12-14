@@ -1,153 +1,67 @@
-import gsap from "gsap"
-import {ScrollTrigger} from "gsap/ScrollTrigger"
-import {SkillBox} from "./styledComponent"
-import "./index.css"
-import {useEffect, useRef, useState} from "react"
+import React, { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
+const skillsData = [
+    { name: "Frontend", tags: ["HTML5", "CSS3", "JavaScript", "React.js", "Next.js", "Tailwind"] },
+    { name: "Backend", tags: ["Node.js", "Express.js", "Python", "REST APIs"] },
+    { name: "Data & Tools", tags: ["MongoDB", "SQL", "Git", "GitHub", "VS Code"] }
+];
 
+const Skills = () => {
+    const containerRef = useRef(null);
 
-  const frontend=[{name:"HTML", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713798519/html_1051277_hrexj2.png", color:"orange" }, 
-  {name:"CSS", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713798428/social_11516361_ik5c4l.png",  color:"skyblue"  }, 
-  {name:"JS", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713798427/js_5968292_pwhqit.png",  color:"#f0db4f"  },
-  {name:"Bootstrap", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713798427/bootstrap_5968672_eb3l6s.png",  color:"#563d7c"  },
-  {name:"REACT", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713798428/science_13065981_uzgkcf.png",  color:"#61DBFB"  }]
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.utils.toArray(".skill-card").forEach((card, i) => {
+                gsap.from(card, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 90%",
+                        end: "top 60%",
+                        scrub: 1
+                    }
+                });
+            });
+        }, containerRef);
+        return () => ctx.revert();
+    }, []);
 
+    return (
+        <section id="skills_section" className="section-padding bg-zinc-950 relative" ref={containerRef}>
+            {/* Background grid line */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
 
-  const backend=[{name:"PYTHON", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713802637/python_5968350_jrlulw.png", color:"#4584b6" }, 
-  {name:"NODE.JS", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713802636/nodejs_my7yxp.svg",  color:"green"  }, 
-  {name:"EXPRESS.JS", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713802636/express-original_ljknwv.svg",  color:"black"  },
- ]
+            <div className="container-fluid relative z-10">
+                <div className="mb-20">
+                    <h2 className="text-4xl sm:text-6xl font-black text-white mb-6 uppercase tracking-tight">
+                        Technical <span className="text-red-600">Arsenal</span>
+                    </h2>
+                    <div className="h-1 w-20 bg-red-600"></div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {skillsData.map((category) => (
+                        <div key={category.name} className="skill-card group p-8 border border-zinc-800 bg-black/50 hover:border-red-600/50 hover:bg-zinc-900/50 transition-all duration-500">
+                            <h3 className="text-2xl font-bold mb-8 text-zinc-300 group-hover:text-red-500 transition-colors uppercase tracking-wider">{category.name}</h3>
+                            <div className="flex flex-wrap gap-3">
+                                {category.tags.map(tag => (
+                                    <span key={tag} className="px-4 py-2 bg-zinc-900 text-zinc-400 text-sm font-bold uppercase tracking-wide border-l-2 border-transparent hover:border-red-600 hover:text-white transition-all cursor-default">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
 
- const database=[{name:"SQL", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713803232/data-server_9698555_eiz6zw.png", color:"skyblue" }, 
-  {name:"MANGODB", icon:"https://res.cloudinary.com/dky72aehn/image/upload/v1713803430/mongodb-icon_nxzirg.svg",  color:"green"  }, 
- ]
-
-
-
-
-
-const Skills=()=> {
-const [ani, setani]=useState(false)
-
-const skillsList=(item)=>{
-  const {name, icon, color}=item
-  return (<SkillBox className="box"color={color}>
-    <p className="logo_name">{name}</p>
-    <img src={icon} className="logo"/>
-  </SkillBox>)
-}
-const element=useRef(null)
-const image=useRef(null)
-const div=useRef(null)
-const hrl=useRef(null)
-const hrr=useRef(null)
-
-useEffect(()=>{
-const el=element.current
-const one=image.current
-
-const two=div.current
-
-// skill tabs
-gsap.fromTo(one, {x:"-900px", opacity:0 }, {x:"0px", opacity:1,duration:1, ease:"slow(0.7,0.7,false)",
-   scrollTrigger:{
-     start:"top 80%",
-     end:"top 50%",
-     scrub:3,
-     trigger:el,
-    
-   }
-});
-
-gsap.fromTo(two, {opacity:0, x:"900px", }, {x:"0px", opacity:1, duration:1, ease:"slow(0.7,0.7,false)",
-
- scrollTrigger:{
-  start:"top 80%",
-  end:"top 50%",
-scrub:3,
-  trigger:el,
-}})
-
-// Skill heqd
-
-gsap.fromTo(el, {opacity:0, y:"-90px",}, {y:"0px", opacity:1, ease: "slow(0.7,0.7,false)", scrollTrigger:{
-  start:"top 80%",
-  end:"top 50%",
-  scrub:3,
-  trigger:el,
-
-}});
-
-gsap.fromTo(hrl.current, {opacity:0, x:"-580px",}, {x:"-70px", opacity:1, ease: "slow(0.7,0.7,false)", scrollTrigger:{
-  start:"top 80%",
-  end:"top 50%",
-  scrub:3,
-  trigger:el,
- 
-}});
-
-gsap.fromTo(hrr.current, {opacity:0, x:"580px",}, {x:"70px", opacity:1, ease: "slow(0.7,0.7,false)", scrollTrigger:{
-  start:"top 80%",
-  end:"top 50%",
-  scrub:3,
-  trigger:el,
-}});
-
- 
-
-}, [])
-
-
-
-    
-  return (
-
-   <div className="skill_main"  id="skills_section" >
-     <div className="skill_head"  > 
-      <hr  ref={hrl}/> 
-      <h1 style={{fontWeight:"650", marginRight:"20px",fontFamily: "julius sans one, cursive", marginLeft:"20px", position:"absolute"}} ref={element} >Skills</h1>
-       <hr ref={hrr} />
-     </div>
-     <div className='s_main' >
-        <img src="https://res.cloudinary.com/dky72aehn/image/upload/v1713725258/undraw_static_assets_rpm6_ejpryd.svg" className="svg_pic" ref={image} />
-      <div className="skills_div"  ref={div} >
-      
-       <div  className="all_skills">
-       <div className="each_skill_div">
-            <h4 className="category" > FrontEnd :</h4>
-            <ul className="cell_div">
-              {frontend.map((item)=>(
-              <li>
-                {skillsList(item)}
-              </li>))}
-            </ul>
-        </div>
-        <div  className="each_skill_div">
-            <h4 className="category" >Backend :</h4>
-            <ul className="cell_div">
-              {backend.map((item)=>(
-              <li>
-                {skillsList(item)}
-              </li>))}
-            </ul>
-        </div>
-        <div  className="each_skill_div">
-            <h4 className="category" >Database :</h4>
-            <ul className="cell_div">
-              {database.map((item)=>(
-              <li>
-                {skillsList(item)}
-              </li>))}
-            </ul>
-        </div>
-       </div>
-      
-      </div>
-    </div>
-   </div>
-  )
-}
-
-export default Skills
+export default Skills;

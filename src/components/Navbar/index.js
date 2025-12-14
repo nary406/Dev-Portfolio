@@ -1,35 +1,87 @@
-import { CiMenuFries } from "react-icons/ci";
-import {Image,Btn,Button,  Nav,Imagdiv, Display}from "./styledComponents"
-import {useState, useContext} from "react"
-import { RxCross2 } from "react-icons/rx";
-import "./index.css"
-import {User} from "../../App"
+import React, { useState, useEffect } from "react";
+import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 
-const Header=()=> {
-  const [ham, setham]=useState(false)
-  const {name, age}=useContext(User)
+const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-const hamburger=()=>(
-  setham(!ham)
-)
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: "Work", href: "#projects_section" },
+    { name: "Skills", href: "#skills_section" },
+    { name: "Contact", href: "#contact_section" },
+  ];
 
   return (
-  <Nav ham={ham} id="profile_section">
-   <Imagdiv>
-   <Image src="https://res.cloudinary.com/dky72aehn/image/upload/v1712938941/Screenshot_2024-04-12_214806-transformed-removebg-preview_uzm0zv.png" className="bounce-in-left"/>
-  <Btn onClick={hamburger} style={{fontSize:"30px", color:"#045799"}} className="bounce-in-left"> {!ham?<CiMenuFries/>:<RxCross2/>} </Btn>
+    <>
+      <nav 
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          scrolled ? "bg-black/90 backdrop-blur-md py-4 border-b border-red-900/30" : "bg-transparent py-6"
+        }`}
+      >
+        <div className="container-fluid flex items-center justify-between">
+          
+          {/* Logo */}
+          <a href="#" className="font-bold text-2xl tracking-tighter z-50 group">
+            <span className="text-white group-hover:text-red-500 transition-colors">NAREN</span>
+            <span className="text-red-600">.</span>
+          </a>
 
-   </Imagdiv>
-    <Display display="row" ham={ham} as="ul">
-      <li><a href="#profile_section"> <Button className="hvr">profile</Button></a></li>
-      <li><a href="#skills_section"><Button className="hvr">skills</Button></a></li>
-      <li><a href="#projects_section"><Button className="hvr">projects</Button></a></li>
-      <li><a href="#contact_section"> <Button className="hvr">contacts</Button></a></li>
-    </Display>
+          {/* Desktop Nav */}
+          <ul className="hidden md:flex items-center gap-12">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <a 
+                  href={link.href} 
+                  className="text-sm font-bold uppercase tracking-widest text-zinc-400 hover:text-red-600 transition-colors relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-red-600 after:left-0 after:-bottom-1 after:transition-all hover:after:w-full"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+            <li>
+                <a href="#contact_section" className="px-6 py-2 border border-red-600 text-red-600 text-sm font-bold uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all duration-300">
+                    Hire Me
+                </a>
+            </li>
+          </ul>
 
+          {/* Mobile Toggle */}
+          <button 
+            onClick={() => setIsOpen(!isOpen)} 
+            className="md:hidden z-50 text-2xl text-white hover:text-red-600 transition-colors"
+          >
+            {isOpen ? <RxCross2 /> : <RxHamburgerMenu />}
+          </button>
+        </div>
+      </nav>
 
-  </Nav>
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 bg-zinc-950 z-40 flex flex-col items-center justify-center gap-10 transition-transform duration-500 ease-[cubic-bezier(0.87,0,0.13,1)] ${
+          isOpen ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        {navLinks.map((link) => (
+          <a 
+            key={link.name}
+            href={link.href} 
+            onClick={() => setIsOpen(false)}
+            className="text-4xl font-black text-white hover:text-red-600 hover:tracking-widest transition-all duration-300 uppercase italic"
+          >
+            {link.name}
+          </a>
+        ))}
+      </div>
+    </>
   );
-}
+};
 
 export default Header;
