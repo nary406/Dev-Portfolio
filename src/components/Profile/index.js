@@ -148,19 +148,19 @@ const Profilesection = () => {
                                 <div className="bg-black/80 backdrop-blur-md border border-zinc-700 px-4 py-3 flex items-center gap-3 w-fit">
                                     <HiCode className="text-red-600 text-xl" />
                                     <div>
-                                        <p className="text-xs text-zinc-400 uppercase tracking-wider">Stack</p>
-                                        <p className="text-white font-bold leading-none">MERN / Next.js</p>
+                                        <p className="text-xs text-zinc-400 uppercase tracking-wider"></p>
+                                        <p className="text-white font-bold leading-none">MERN Stack</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Floating Professional Badge outside */}
-                        <div className="absolute top-[20%] -left-8 md:-left-12 z-40 animate-float">
-                            <div className="bg-zinc-900 border border-zinc-700 p-4 shadow-2xl shadow-red-900/20 max-w-[160px]">
-                                <HiLightningBolt className="text-yellow-500 text-2xl mb-2" />
-                                <p className="text-2xl font-black text-white">3+</p>
-                                <p className="text-xs text-zinc-400 uppercase tracking-wide font-medium">Years of Prof. Experience</p>
+                        {/* Floating Professional Badge - Optimized for Mobile */}
+                        <div className="absolute top-4 right-4 md:top-[20%] md:right-auto md:-left-12 z-40 animate-float">
+                            <div className="bg-zinc-900 border border-zinc-700 p-3 md:p-4 shadow-2xl shadow-red-900/20 max-w-[120px] md:max-w-[160px]">
+                               
+                                <p className="text-xl md:text-2xl text-red-600 font-black  ">2 Years</p>
+                                <p className="text-[10px] md:text-xs text-zinc-400 uppercase tracking-wide font-medium leading-tight"> of Prof. Experience</p>
                             </div>
                         </div>
 

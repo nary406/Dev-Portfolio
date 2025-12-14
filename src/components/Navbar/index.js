@@ -30,8 +30,8 @@ const Header = () => {
           
           {/* Logo */}
           <a href="#" className="font-bold text-2xl tracking-tighter z-50 group">
-            <span className="text-white group-hover:text-red-500 transition-colors">NAREN</span>
-            <span className="text-red-600">.</span>
+            <span className="text-white group-hover:text-red-500 transition-colors"></span>
+            <span className="text-red-600"> NARENDRA</span>
           </a>
 
           {/* Desktop Nav */}
