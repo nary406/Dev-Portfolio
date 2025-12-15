@@ -4,6 +4,7 @@ import Header from "../components/Navbar";
 import Profilesection from "../components/Profile";
 import Skills from "../components/Skills";
 import Projects from "../components/projects";
+import Freelance from "../components/Freelance";
 import Contact from "../components/contact";
 import { User } from "../context/UserContext";
 
@@ -17,6 +18,7 @@ export default function Home() {
         <Header />
         <Profilesection />
         <Skills />
+        <Freelance />
         <Projects />
         <Contact />
       </main>
